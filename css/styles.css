@@ -1,0 +1,17 @@
+body {
+    background-color: darksalmon;
+}
+
+.login-form {
+    background-color:tan;
+    width: 45%;
+    margin: 5rem auto 0 auto;
+    padding: 3rem;
+    border: 1px solid darkorange;
+    border-radius: 10px 25px 10px 25px;
+    overflow: hidden;
+}
+
+.login-form input {
+    margin: 1rem auto 0 auto;
+}
