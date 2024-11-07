@@ -18,53 +18,68 @@ body {
 
 .bookContainer {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     width: 75%;
-    margin: 5rem auto 5rem auto;
+    margin: 5rem auto;
+    gap: 1rem; /* Adds spacing between each book component */
 }
 
-.bookDiv {
-    display: flex;
-    width: 100%;
+.bookComponent {
+    width: 300px;
+    display: grid;
+    grid-template-areas: 
+        "img details"
+        "button button";
+    grid-template-columns: 128px 1fr; /* Sets the width for the image and details */
     border: 2px solid black;
-    text-align: center;
-    gap: 1rem;
+    border-radius: 10px;
+    background-color: white;
 }
 
-.bookDivLeft {
-    flex: 1;
+.bookComponent img {
+    grid-area: img;
+    width: 128px;
+    height: 183px;
+    object-fit: cover;
+    border: 1px solid black;
+    margin: 0 auto;
+    border-radius: 7px 0px 0px 0px;
 }
 
 .bookDivRight {
-    flex: 2;
+    grid-area: details;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+}
+
+.bookDivBottom {
+    grid-area: button;
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.bookTitle, .bookAuthor, .bookPrice {
+    text-align: center;
+    padding: 0.5rem;
+    height: 61px;
 }
 
 .bookTitle {
     background-color: aqua;
-    text-align: center;
-    margin-top: 0;
-}
-
-.bookDiv img {
-    width: 128px;
-    height: 183px;
-    object-fit: cover;
-    display: block;
-    margin: 0 auto;
-}
-
-.bookPrice {
-    background-color: purple;
+    border-radius: 0px 7px 0px 0px;
 }
 
 .bookAuthor {
     background-color: brown;
 }
 
+.bookPrice {
+    background-color: purple;
+    border-bottom: 1px solid black;
+}
+
 .bookAddToCart form {
-    margin-top: auto;
-    margin: 0.25rem auto 0.25rem auto;
+    display: flex;
+    justify-content: center;
 }

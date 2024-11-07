@@ -16,38 +16,12 @@
 <div class="bookContainer">
     <?php
         foreach ($books as $book) {
-            echo("
-                <div class='bookDiv text-center col'>
-
-                    <div class='bookImg col bookDivLeft'>
-                        <img src='.." . DIRECTORY_SEPARATOR . "/model/$book[bookImgURL]'>
-                    </div>
-
-                    <div class='col bookDivRight'>
-
-                        <div class='bookTitle row text-center'>
-                            $book[bookName]
-                        </div>
-
-                        <div class='bookAuthor row'>
-                            $book[bookAuthor]
-                        </div>
-
-                        <div class='bookPrice row'>
-                            $book[bookPrice]
-                        </div>
-
-                        <div class='bookAddToCart text-center row'>
-                            <form action='' method='post'>
-                                <button class='btn btn-primary' id='submit' name='submit'>Add to cart</button>
-                                <input type='hidden' id='$book[bookId]' name='bookId'>
-                            </form>
-                        </div>
-
-                    </div>
-
-                </div>
-            ");
+            $imgPath = $book['bookImgURL'];
+            $bookTitle = $book['bookName'];
+            $bookAuthor = $book['bookAuthor'];
+            $bookPrice = $book['bookPrice'];
+            $bookId = $book['bookId'];
+            include "../components/book.php";
         }
     ?>
 </div>
