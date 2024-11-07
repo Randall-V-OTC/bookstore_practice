@@ -1,5 +1,32 @@
 <?php
+
+    include "model/user_db.php";
+
     session_start();
+    
+    $loggedIn = false;
+
+    $logout = filter_input(INPUT_GET, 'lo');
+
+    if ($logout === 'y') {
+        if (isset($_COOKIE[session_name()])) {
+            setcookie(session_name(), '', time() - 4200, "/");
+        }
+        session_destroy();
+    } else {
+
+        $input_user = filter_input(INPUT_POST, 'username');
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (userExists($_POST['username'])) {
+                $loggedIn = true;
+            } else {
+                $loggedIn = false;
+            }
+        }
+
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,22 +39,25 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <?php include "login/login.php";
+    <?php
 
-    include "functions/book.php";
+        if ($loggedIn) {
+            echo('logged in');
+        } else {
 
-        //include "functions/createbooks.php";
+            include "view/login.php";
+            include "model/book_db.php";
 
-    $bookArr = [
-        [new book(1, "Harry Potter", "J.K. Rowling", 540)],
-        [new book(2, "Wutherington Heights", "Unknown", 609)],
-        [new book(3, "Some Other Book", "Who Knows", 123)]
-    ];
+            print_r($bookArr);
 
-    print_r($bookArr);
+            echo($bookArr[0]->bookName."<br>");
 
-    echo($bookArr[0]['bookName']);
+            foreach ($bookArr as $book) {
+                echo("<br>Name: $book->bookName <br>");
+            }
 
-    ?>
+        }
+
+?>
 </body>
 </html>
