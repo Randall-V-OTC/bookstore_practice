@@ -1,5 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=Work+Sans:400,600');
 body {
-    background-color: darksalmon;
+    background-color: #7C6354 !important;
 }
 
 .login-form {
@@ -18,10 +19,9 @@ body {
 
 .bookContainer {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     width: 75%;
-    margin: 5rem auto;
-    gap: 1rem; /* Adds spacing between each book component */
+    margin: 8rem auto;
 }
 
 .bookComponent {
@@ -34,6 +34,7 @@ body {
     border: 2px solid black;
     border-radius: 10px;
     background-color: white;
+    margin: auto; /* center the components as a whole in their parent */
 }
 
 .bookComponent img {
@@ -43,43 +44,208 @@ body {
     object-fit: cover;
     border: 1px solid black;
     margin: 0 auto;
-    border-radius: 7px 0px 0px 0px;
+    border-radius: 6px 0px 0px 0px;
 }
 
 .bookDivRight {
     grid-area: details;
     display: flex;
     flex-direction: column;
+    background: #F8FCDA;
+    border-radius: 0px 7px 0px 0px;
 }
 
 .bookDivBottom {
     grid-area: button;
     display: flex;
+    padding: 0.5rem;
     justify-content: center;
-    margin-top: 1rem;
+    background-color: #E3E9C2;
+    border-radius: 0px 0px 7px 7px;
+}
+
+.bookAddToCart form {
+    display: flex;
+    justify-content: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .bookTitle, .bookAuthor, .bookPrice {
     text-align: center;
     padding: 0.5rem;
     height: 61px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid black;
+}
+
+.bookTitle:hover, .bookAuthor:hover, .bookPrice:hover, .bookDivBottom:hover, .bookComponent img:hover {
+    opacity: 0.9;
 }
 
 .bookTitle {
-    background-color: aqua;
+    border-bottom: 1px solid black;
     border-radius: 0px 7px 0px 0px;
 }
 
 .bookAuthor {
-    background-color: brown;
+    
 }
 
 .bookPrice {
-    background-color: purple;
     border-bottom: 1px solid black;
 }
 
-.bookAddToCart form {
-    display: flex;
-    justify-content: center;
+footer {
+    background-color: #F9FBB2;
+    border-top: 1px solid black;
 }
+
+/* --------------------------------------------------------------------------------------------------------------
+    Navbar CSS thanks Kevin credit from https://www.mockplus.com/blog/post/bootstrap-navbar-template 
+    
+    Modified by myself for use on my project
+*/
+
+.navContainer {
+	width: 100%;
+    margin-left: 0;
+	margin: 0 auto;
+}
+
+.header {
+    background-color: #F9FBB2;
+    border-bottom: 1px solid black;
+}
+
+.header::after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.logo {
+    float: left;
+    margin-left: 2.5rem;
+    padding: 10px 0;
+}
+
+/* nav {
+    float: left; 
+} */
+
+nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+} 
+
+nav li {
+    display: inline-block;
+    margin-left: 70px;
+    position: relative;
+}
+
+nav a {
+    color: black;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+nav a:hover {
+    color: #000; 
+}
+
+nav a::before {
+    content: '';
+    display: block;
+    height: 7px;
+    background-color: #7C6354;
+    position: absolute;
+    top: 0;
+    width: 0%;
+    transition: all ease-in-out 550ms;
+}
+
+nav a:hover::before {
+    width: 100%;
+}
+
+.cartIcon {
+    width: 25px;
+    height: 25px;
+}
+
+/* -------------------------------------------------- END NAVBAR -------------------------------------------------- */
+
+/* -------------------------------------------- BEGIN CART -------------------------------------------- */
+
+.cartContainer {
+    background-color: black;
+    display: grid;
+    background-color: white;
+    width: 40%;
+    margin: 10rem auto;
+    border: 2px solid black;
+    border-radius: 10px 20px 10px 20px;
+}
+
+.cartContents {
+    display: column;
+}
+
+.cartBookContainer {
+    display: grid;
+    grid-template-areas: 
+        "cartimg cartdetails";
+    /* use this two define each column width, 
+    left is 128 and right is adjustible to its content */
+    grid-template-columns: 128px auto; 
+    width: 60%;
+    margin: 1rem auto 0 auto;
+    border: 2px solid black;
+}
+
+.cartBookDivLeft {
+    grid-area: cartimg;
+    display: flex;
+    flex-direction: column;
+    width: 128px;
+    height: 183px;
+}
+
+.cartBookDivLeft img {
+    width: 128px;
+    height: 183px;
+    border: 1px solid black;
+}
+
+.cartBookDivRight {
+    grid-area: cartdetails;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.cartDivRightBottom {
+    margin: auto 10px 5px auto;
+}
+
+.cartTotalBottom {
+    border-width: 0px 1px 1px 1px;
+    border-style: solid;
+    border-color: black;
+    width: 60%;
+    margin: 0 auto 2.5rem auto;
+    padding: 1rem 0 3rem 0;
+}
+
+.cartEmptyDiv {
+    padding: 5rem;
+}
+
+/* -------------------------------------------- END CART -------------------------------------------- */

@@ -1,7 +1,8 @@
 <?php
 
     // include "../model/user_db.php";
-    include "../model/book_db.php";
+    //include "../model/book_db.php";
+    //include "model" . DIRECTORY_SEPARATOR . "book_db.php";
 
     $books = getBooks();
 
@@ -21,7 +22,8 @@
             $bookAuthor = $book['bookAuthor'];
             $bookPrice = $book['bookPrice'];
             $bookId = $book['bookId'];
-            include "../components/book.php";
+            // include "../components/book.php";
+            include "components" . DIRECTORY_SEPARATOR . "book.php";
         }
     ?>
 </div>
