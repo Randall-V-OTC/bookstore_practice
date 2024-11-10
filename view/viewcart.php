@@ -5,10 +5,17 @@
     // clears the cart if the clear cart button is clicked
     if (isset($_POST['clearCartButton'])) {
         clearCart();
+        header("Location: " . $_SERVER['PHP_SELF']); // reload the page so the cart icon refreshes to 0
+        exit; // calling exit here prevents the rest of this file from executing prior to reloading the page
     }
 
-    if (isset($_POST['removeAllBooksFromCart'])) {
-        removeBookFromCart($_POST['bookIdRemove']);
+    if (isset($_POST['removeBookFromCart'])) {
+        $remove = isset($_POST['removeFromQuantity']) ? $_POST['removeFromQuantity'] : 1;
+        removeBookFromCart($_POST['bookIdRemove'], $remove);
+        echo("<script>alert('here');</script>");
+        echo('<script>console.log("remove book");</script>');
+        header("Location: " . $_SERVER['PHP_SELF']); // reload the page so the cart icon refreshes to 0
+        exit; // calling exit here prevents the rest of this file from executing prior to reloading the page
     }
 ?>
 <div class="cartContainer">
@@ -30,42 +37,57 @@
                 $cartTotal += $total;
                 $cartTotalQuantity += $quantity;
                 //print_r($book);
-                echo("
-                    <div class='cartBookContainer'>
-                        <div class='cartBookDivLeft'>
-                            <div class='cartBookImg'>
-                                <img src='model/$book[bookImgURL]' alt='Book Image' title='$book[bookName]'>
-                            </div>
-                        </div>
-
-                        <div class='cartBookDivRight'>
-                            <div class='cartBookTitle'>Title: $book[bookName]</div>
-                            <div class='cartBookPrice'>Price: $book[bookPrice]</div>
-                            <div class='cartBookQuantity'>Quantity: $quantity</div>
-                ");
-
-                if ($quantity == 1) {
+                if ($quantity > 0) {
                     echo("
-                        <div class='cartDivRightBottom'>
-                            <div class='cartBookPriceTotal'>Total: $" . number_format($total, 2) . "</div>
-                            <div class='cartRemoveBook'><button class='removeBookFromCart btn btn-secondary'>Remove Book</button></div>
+                        <div class='cartBookContainer'>
+                            <div class='cartBookDivLeft'>
+                                <div class='cartBookImg'>
+                                    <img src='model/$book[bookImgURL]' alt='Book Image' title='$book[bookName]'>
+                                </div>
+                            </div>
+
+                            <div class='cartBookDivRight'>
+                                <div class='cartBookTitle'>Title: $book[bookName]</div>
+                                <div class='cartBookPrice'>Price: $book[bookPrice]</div>
+                                <div class='cartBookQuantity'>Quantity: $quantity</div>
+                    ");
+
+                    if ($quantity == 1) {
+                        echo("
+                            <div class='cartDivRightBottom'>
+                                <div class='cartBookPriceTotal'>Total: $" . number_format($total, 2) . "</div>
+                                <div class='cartRemoveBook' id='cartRemoveBook' name='cartRemoveBook'>
+                                    <form method='post' action=''>
+                                        <button class='removeBookFromCart btn btn-secondary' id='removeBookFromCart' name='removeBookFromCart'>Remove Book</button>
+                                        <input type='hidden' id='bookIdRemove' name='bookIdRemove' value='$bookId'>
+                                    </form>
+                                </div>
+                            </div>
+                        ");
+                    } else {
+                        echo("
+                            <div class='cartDivRightBottom'>
+                                <div class='cartBookPriceTotal'>Total: $" . number_format($total, 2) . "</div>
+                                <div class='cartRemoveBook' id='cartRemoveBook' name='cartRemoveBook'>
+                                    <form method='post' action=''>
+                                        <input type='number' id='removeFromQuantity' name='removeFromQuantity' min='1' step='1' style='width: 55px;' value='1'>
+                                        <button class='removeBookFromCart btn btn-secondary' id='removeBookFromCart' name='removeBookFromCart'>Remove Books</button>
+                                        <input type='hidden' id='bookIdRemove' name='bookIdRemove' value='$bookId'>
+                                    </form>
+                                </div>
+                            </div>
+                        ");
+                    } 
+                    echo("
+                            </div>
                         </div>
                     ");
                 } else {
-                    echo("
-                        <div class='cartDivRightBottom'>
-                            <div class='cartBookPriceTotal'>Total: $" . number_format($total, 2) . "</div>
-                            <div class='cartRemoveBook' id='cartRemoveBook' name='cartRemoveBook'>
-                                <button class='removeBookFromCart btn btn-secondary'>Remove Books</button></div>
-                                <input type='hidden' id='bookIdRemove' name='bookIdRemove' value='$bookId'>
-                            </form>
-                        </div>
-                    ");
-                } 
-                echo("
-                        </div>
-                    </div>
-                ");
+                    // allows the page to refresh properly if no books exist in the array
+                    if (getTotalQuantity() === 0) {
+                        clearCart();
+                    }
+                }
             }
         }
         if (empty($_SESSION['cart'])) {

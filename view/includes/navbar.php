@@ -18,7 +18,7 @@
       </li>
     </ul>
     <button type="button" class="btn btn-primary mr-4 p-1" title="Shopping Cart" onclick="window.location.href='/bookstore_practice/shopping-cart.php'">
-        <img class="cartIcon" src="model/images/cart.png"> <span class="badge badge-light">0</span>
+        <img class="cartIcon" src="model/images/cart.png"> <span class="badge badge-light"><?php echo(getTotalQuantity()); ?></span>
     <span class="sr-only">items in cart</span>
     </button>
     <form class="form-inline my-2 my-lg-0">

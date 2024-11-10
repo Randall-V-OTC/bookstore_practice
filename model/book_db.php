@@ -2,6 +2,10 @@
 
     $cart = isset($_COOKIE['cart']) ? json_decode($_COOKIE['cart'], true) : [];
 
+    setcookie('quantity', 0, time() + 3600, '/');
+
+    $ongoingQuantity = isset($_COOKIE['quanity']) ? json_decode($_COOKIE['quanity']) : [];
+
     //include "functions/book.php";
 
     //include "functions/createbooks.php";
@@ -66,7 +70,7 @@
         // execute the query
         $initQuery->execute();
 
-        // fetch the results
+        // fetch the result
         return $initQuery->fetch(PDO::FETCH_ASSOC);
     }
 
@@ -76,10 +80,12 @@
         setcookie('cart', '', time() - 3600, '/');
     }
 
-    function removeBookFromCart($bookId, $quantity) {
-        global $cart;
+    function removeBookFromCart($bookId, $quantity = 1) {
+        //global $cart;
+        $currQuantity = $_SESSION['cart'][$bookId];
         if (isset($_SESSION['cart']) !== '') {
-            $_SESSION['cart'][$bookId] == 0;
+            $newQuantity = $currQuantity - $quantity;
+            $_SESSION['cart'][$bookId] = $newQuantity;
         }
     }
 
@@ -111,4 +117,12 @@
 
         setcookie('cart', json_encode($cart), time() + 3600, '/');
 
+    }
+
+    function getTotalQuantity($totalQuantity = 0) {
+        $books = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
+        foreach ($books as $book => $quantity) {
+            $totalQuantity += $quantity;
+        }
+        return $totalQuantity;
     }
